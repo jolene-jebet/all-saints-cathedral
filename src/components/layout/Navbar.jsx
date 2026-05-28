@@ -45,17 +45,6 @@ export default function Navbar() {
         style={{ cursor: 'pointer' }}
       >
         <div style={{
-          fontFamily: "'Jost', sans-serif",
-          fontSize: 10,
-          letterSpacing: 5,
-          textTransform: 'uppercase',
-          color: 'var(--gold)',
-          fontWeight: 500,
-          marginBottom: 3,
-        }}>
-          ✦ Est. 1847
-        </div>
-        <div style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontSize: 20,
           fontWeight: 400,
