@@ -51,7 +51,7 @@ export default function Navbar() {
           letterSpacing: 2,
           color: 'var(--charcoal)',
         }}>
-          All Saints Cathedral
+          All Saints Parish Annex
         </div>
       </div>
 
