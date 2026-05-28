@@ -4,93 +4,48 @@ import SectionLabel from '../components/ui/SectionLabel';
 import GoldRule from '../components/ui/GoldRule';
 import PlaceholderImg from '../components/ui/PlaceholderImg';
 
-// ─────────────────────────────────────────────────────────
-// HOOK: useReveal
-// Watches elements with .reveal / .reveal-left / .reveal-right
-// and adds the .visible class when they scroll into view.
-// Think of it like a stage crew — elements wait offstage,
-// and this hook cues them to enter once the audience can see them.
-// ─────────────────────────────────────────────────────────
 function useReveal() {
   useEffect(() => {
-    // Select all elements that should animate in on scroll
     const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-
-    // IntersectionObserver fires when an element enters/exits the viewport
     const obs = new IntersectionObserver(
       entries => entries.forEach(e => {
         if (e.isIntersecting) {
-          e.target.classList.add('visible'); // trigger the CSS transition
-          obs.unobserve(e.target);           // stop watching once visible — no repeat
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
         }
       }),
-      { threshold: 0.1 } // fire when 10% of the element is visible
+      { threshold: 0.1 }
     );
-
-    els.forEach(el => obs.observe(el)); // start watching each element
-    return () => obs.disconnect();      // cleanup when component unmounts
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
   }, []);
 }
 
-// ─────────────────────────────────────────────────────────
-// DATA: MASSES
-// Each object is one row in the schedule table.
-// day, name, time, note map directly to table columns.
-// ─────────────────────────────────────────────────────────
 const MASSES = [
-  { day: 'Sunday',    time: '8:00 AM',   note: 'Quiet, said service' },
-  { day: 'Sunday',   time: '10:30 AM',  note: 'Full choir & organ' },
-  { day: 'Sunday',    time: '6:00 PM',   note: 'Contemplative Vespers' },
-  { day: 'Wednesday',     time: '12:15 PM',  note: 'Brief & nourishing' },
-  { day: 'Friday',        time: '5:00 PM',   note: 'Sacrament of healing' },
-  { day: 'Daily',  time: '7:30 AM',   note: 'Mon – Sat' },
+  { day: 'Sunday',    name: 'First Mass',   time: '8:00 AM' },
+  { day: 'Sunday',    name: 'Second Mass',  time: '10:30 AM'  },
+  { day: 'Sunday',    name: 'Evening Mass',    time: '6:00 PM'},
+  { day: 'Wednesday', name: 'Midweek Mass',      time: '12:15 PM'},
+  { day: 'Friday',    name: 'Confession',        time: '5:00 PM'},
+  { day: 'Daily',     name: 'Morning Prayer',    time: '7:30 AM',},
 ];
 
-// ─────────────────────────────────────────────────────────
-// DATA: CLERGY
-// Each object represents one clergy card in the grid.
-// ─────────────────────────────────────────────────────────
 const CLERGY = [
-  { name: 'fr. Michael', role: 'Parish Priest',      note: 'Ordained 1998 · Joined 2015', photo: '/images/fr_michael.jpg' },
-  { name: 'Canon James Okafor',           role: 'Canon Precentor',    note: 'Ordained 2005 · Joined 2018', photo: '/images/james-okafor.jpg' },
-  { name: 'Rev. Sophia Andrade',          role: 'Associate Priest',   note: 'Ordained 2014 · Joined 2021', photo: '/images/sophia-andrade.jpg' },
-  { name: 'Deacon Thomas Walsh',          role: 'Deacon of Ministry', note: 'Ordained 2010 · Joined 2019', photo: '/images/thomas-walsh.jpg' },
+  { name: 'Fr. Michael Mutai',    role: 'Founding Parish Priest',  note: 'Appointed June 2023', src: '/images/clergy/fr_mutai.jpg' },
+  { name: 'Fr. Timothy Kiplagat', role: 'Cathedral Administrator', note: 'Served since 2011',   src: '/images/clergy/fr_timothy.jpg' },
+  { name: 'Fr. David Kibet',      role: 'Former Chaplain',         note: 'Served 2005 – 2018',  src: '/images/clergy/fr_david.jpg' },
+  { name: 'Fr. Charles Kirui',    role: 'Former Chaplain',         note: 'Served 2009 – 2011',  src: '/images/clergy/fr_kirui.jpg' },
 ];
 
-// ─────────────────────────────────────────────────────────
-// DATA: TIMELINE
-// Milestones rendered as alternating left/right cards
-// along a vertical centre line.
-// ─────────────────────────────────────────────────────────
-const TIMELINE = [
-  { year: '1847', title: 'Foundation',       desc: 'The original chapel is consecrated on All Saints\' Day by Bishop Thomas Hart.' },
-  { year: '1865', title: 'The Great Fire',   desc: 'A devastating fire destroys the nave. Rebuilding begins within months, funded by the community.' },
-  { year: '1892', title: 'Gothic Expansion', desc: 'The Cathedral gains its iconic bell tower and rose window in the Victorian Gothic style.' },
-  { year: '1944', title: 'War Memorial',     desc: 'The Memorial Chapel is added to honour parishioners lost in World War II.' },
-  { year: '1972', title: 'Modern Nave',      desc: 'A contemporary nave extension doubles seating capacity and adds a new pipe organ.' },
-  { year: '2025', title: 'Today',            desc: 'All Saints serves 2,000+ families, maintaining a ministry of worship, service, and welcome.' },
-];
-
-// ─────────────────────────────────────────────────────────
-// PAGE COMPONENT: Home
-// Assembles all sections in order:
-//   Hero → Mass Schedule → Clergy → History → Timeline
-// ─────────────────────────────────────────────────────────
 export default function Home() {
-  useReveal();                   // activate scroll-reveal for this page
-  const navigate = useNavigate(); // used by the "Our Story" CTA button
+  useReveal();
+  const navigate = useNavigate();
 
   return (
     <div style={{ background: 'var(--cream)' }}>
 
       {/* ══════════════════════════════════
-          SECTION 1: HERO
-          Full-viewport opening panel with:
-          - A real cathedral photo as background
-          - Overlay for text legibility
-          - Decorative SVG arch (low opacity)
-          - Cathedral name + two CTA buttons
-          - Animated scroll-down hint at bottom
+          HERO
       ══════════════════════════════════ */}
       <section style={{
         minHeight: '100vh',
@@ -105,12 +60,12 @@ export default function Home() {
       }}>
 
         {/* ── Hero background image ──
-            A full-cover cathedral photo sits behind all content.
+            A full-cover parish photo sits behind all content.
             object-fit: cover ensures it crops gracefully at any screen size
             (like setting a photo as a desktop wallpaper — it always fills). */}
         <img
           src="/images/exterior_painted.png"
-          alt="Cathedral interior"
+          alt="All Saints Parish exterior"
           style={{
             position: 'absolute',
             inset: 0,
@@ -122,34 +77,14 @@ export default function Home() {
           }}
         />
 
-        {/* ── Dark overlay ──
-            A semi-transparent dark layer over the photo so white/cream text
-            stays legible — like sunglasses for the background. */}
+        {/* Dark overlay so text stays legible over the photo */}
         <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(160deg, rgba(30,28,20,0.72) 0%, rgba(42,42,32,0.60) 60%, rgba(20,18,10,0.80) 100%)',
-          zIndex: 1,
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: 'linear-gradient(160deg, rgba(39,39,32,0.55) 0%, rgba(61,74,37,0.6) 100%)',
         }} />
-        
-        {/* ── Hero text content ──
-            Sits above the image (zIndex: 3) so it's always readable. */}
-        <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-          {/* Small eyebrow label above the main title */}
-          <p style={{
-            fontFamily: "'Jost',sans-serif",
-            fontSize: 10,
-            letterSpacing: 5,
-            textTransform: 'uppercase',
-            color: 'var(--gold)',
-            fontWeight: 500,
-            animation: 'fadeUp 0.8s ease 0.2s both',
-          }}>
-            ✦ &nbsp; A Place of Grace &nbsp; ✦
-          </p>
-
-          {/* Main cathedral name — large, serif, staggered fade-in */}
+        {/* All hero text sits above overlay */}
+        <div style={{ position: 'relative', zIndex: 2 }}>
           <h1 style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 300,
@@ -159,73 +94,50 @@ export default function Home() {
             animation: 'fadeUp 0.9s ease 0.4s both',
           }}>
             All Saints<br />
-            <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Cathedral</em>
+            <em style={{ color: 'var(--gold-light)', fontStyle: 'italic' }}>Parish</em>
           </h1>
 
-          {/* Decorative gold rule (horizontal divider component) */}
-          <GoldRule centered style={{ animation: 'fadeUp 0.8s ease 0.6s both' }} />
+          <GoldRule centered light style={{ animation: 'fadeUp 0.8s ease 0.6s both' }} />
 
-          {/* Tagline subtitle */}
           <p style={{
             fontFamily: "'Jost', sans-serif",
-            fontSize: 15,
-            fontWeight: 300,
-            lineHeight: 1.9,
-            color: 'rgba(250,248,242,0.75)',
-            maxWidth: 420,
+            fontSize: 15, fontWeight: 300, lineHeight: 1.9,
+            color: 'rgba(250,248,242,0.8)', maxWidth: 420,
             animation: 'fadeUp 0.8s ease 0.8s both',
           }}>
-            Where faith meets community, and hearts find home
+            Born from faith, built by community
           </p>
 
-          {/* CTA buttons: primary "Our Story" + ghost "Plan Your Visit" */}
-          <div style={{
-            display: 'flex', gap: 18, marginTop: 44,
-            flexWrap: 'wrap', justifyContent: 'center',
-            animation: 'fadeUp 0.8s ease 1s both',
-          }}>
+          <div style={{ display: 'flex', gap: 18, marginTop: 44, flexWrap: 'wrap', justifyContent: 'center', animation: 'fadeUp 0.8s ease 1s both' }}>
             <button
               onClick={() => navigate('/about')}
               style={btnPrimary}
-              onMouseOver={e => {
-                e.currentTarget.style.background = 'var(--olive-deep)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseOut={e => {
-                e.currentTarget.style.background = 'var(--olive)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              onMouseOver={e => { e.currentTarget.style.background = 'var(--olive-deep)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+              onMouseOut={e => { e.currentTarget.style.background = 'var(--olive)'; e.currentTarget.style.transform = 'translateY(0)'; }}
             >
               Our Story
             </button>
             <button
               style={btnGhost}
-              onMouseOver={e => {
-                e.currentTarget.style.borderColor = 'var(--gold)';
-                e.currentTarget.style.color = 'var(--gold)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseOut={e => {
-                e.currentTarget.style.borderColor = 'rgba(250,248,242,0.4)';
-                e.currentTarget.style.color = 'var(--cream)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-              onClick={() => document.getElementById('mass-schedule').scrollIntoView({ behavior: 'smooth' })}
+              onMouseOver={e => { e.currentTarget.style.borderColor = 'var(--gold)'; e.currentTarget.style.color = 'var(--gold)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+              onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(250,248,242,0.4)'; e.currentTarget.style.color = 'var(--cream)'; e.currentTarget.style.transform = 'translateY(0)'; }}
             >
-              Mass Schedule
+              Plan Your Visit
             </button>
           </div>
         </div>
 
+        {/* Scroll hint */}
+        <div style={{ position: 'absolute', bottom: 36, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, animation: 'fadeUp 0.8s ease 1.4s both', zIndex: 2 }}>
+          <span style={{ fontSize: 9, letterSpacing: 4, textTransform: 'uppercase', color: 'rgba(250,248,242,0.5)', fontFamily: "'Jost', sans-serif" }}>Scroll</span>
+          <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, var(--gold), transparent)', animation: 'shimmer 2s ease infinite' }} />
+        </div>
       </section>
-
       {/* ══════════════════════════════════
-          SECTION 2: MASS SCHEDULE (TABLE)
+      MASS SCHEDULE
       ══════════════════════════════════ */}
-      <section style={{ padding: '110px 60px', background: 'var(--warm)', borderTop: '1px solid var(--divider)' }} id= "mass-schedule">
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-
-          {/* Section heading block */}
+      <section style={{ padding: '110px 60px', background: 'var(--warm)', borderTop: '1px solid var(--divider)' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: 60 }}>
             <SectionLabel text="Gather With Us" />
             <h2 style={sectionTitle}>
@@ -234,60 +146,43 @@ export default function Home() {
             <GoldRule centered />
           </div>
 
-          {/* ── Schedule table ──
-              A semantic HTML table — like a spreadsheet embedded in the page.
-              thead holds column labels; tbody holds each service row.
-              Rows alternate between cream and warm backgrounds for readability. */}
-          <div className="reveal" style={{ overflowX: 'auto' }}> {/* horizontal scroll on small screens */}
+          <div className="reveal" style={{ overflowX: 'auto' }}>
             <table style={{
               width: '100%',
-              borderCollapse: 'collapse', // removes double borders between cells
+              borderCollapse: 'collapse',
               fontFamily: "'Jost', sans-serif",
             }}>
-              {/* Column headers */}
               <thead>
                 <tr style={{ borderBottom: '2px solid var(--olive)' }}>
-                  {['Day', 'Time', 'Notes'].map(col => (
-                    <th key={col} style={{
+                  {['Day', 'Service', 'Time'].map(h => (
+                    <th key={h} style={{
                       padding: '14px 20px',
                       textAlign: 'left',
-                      fontSize: 9,
+                      fontSize: 10,
                       letterSpacing: 4,
                       textTransform: 'uppercase',
-                      color: 'var(--olive)',
-                      fontWeight: 600,
+                      color: 'var(--gold)',
+                      fontWeight: 500,
+                      fontFamily: "'Jost', sans-serif",
                     }}>
-                      {col}
+                      {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-
-              {/* One row per mass entry — index used for zebra striping */}
               <tbody>
                 {MASSES.map((s, i) => (
-                  <tr
-                    key={i}
-                    style={{
-                      background: i % 2 === 0 ? 'var(--cream)' : 'transparent', // alternating rows
-                      borderBottom: '1px solid var(--divider)',
-                      transition: 'background 0.2s',
-                    }}
-                    onMouseOver={e => { e.currentTarget.style.background = 'rgba(168,137,58,0.08)'; }}
-                    onMouseOut={e => { e.currentTarget.style.background = i % 2 === 0 ? 'var(--cream)' : 'transparent'; }}
+                  <tr key={i} style={{
+                    borderBottom: '1px solid var(--divider)',
+                    background: i % 2 === 0 ? 'var(--cream)' : 'transparent',
+                    transition: 'background 0.2s',
+                  }}
+                    onMouseOver={e => e.currentTarget.style.background = 'var(--olive-pale)'}
+                    onMouseOut={e => e.currentTarget.style.background = i % 2 === 0 ? 'var(--cream)' : 'transparent'}
                   >
-                    {/* Day column — styled in gold as a visual anchor */}
-                    <td style={{ padding: '18px 20px', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 500 }}>
-                      {s.day}
-                    </td>
-                    {/* Time — olive color to visually separate from name */}
-                    <td style={{ padding: '18px 20px', fontSize: 14, color: 'var(--olive)', fontWeight: 400, letterSpacing: 1 }}>
-                      {s.time}
-                    </td>
-                    {/* Notes — muted, smallest text — supplementary info */}
-                    <td style={{ padding: '18px 20px', fontSize: 12, color: 'var(--stone)', fontWeight: 300 }}>
-                      {s.note}
-                    </td>
+                    <td style={{ padding: '18px 20px', fontSize: 10, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--olive)', fontWeight: 500 }}>{s.day}</td>
+                    <td style={{ padding: '18px 20px', fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 400, color: 'var(--charcoal)' }}>{s.name}</td>
+                    <td style={{ padding: '18px 20px', fontSize: 14, color: 'var(--olive)', fontWeight: 400, letterSpacing: 1 }}>{s.time}</td>
                   </tr>
                 ))}
               </tbody>
@@ -295,124 +190,57 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ══════════════════════════════════
-          SECTION 3: CLERGY
-      ══════════════════════════════════ */}
-      <section style={{ padding: '110px 60px', background: 'var(--cream)' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-
-          {/* Section heading */}
-          <div className="reveal" style={{ marginBottom: 60 }}>
-            <SectionLabel text="Our Leadership" />
-            <h2 style={sectionTitle}>
-              Meet the <em style={{ fontStyle: 'italic', color: 'var(--olive)' }}>Clergy</em>
-            </h2>
-            <GoldRule />
-          </div>
-
-          {/* CSS grid: auto-fill columns, min 260px wide each */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 32 }}>
-            {CLERGY.map((c, i) => (
-              // transitionDelay staggers the reveal — like dominos falling in sequence
-              <div key={i} className="reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
-                <img
-                  src={c.photo}
-                  alt={c.name}
-                  style={{
-                    width: '100%',
-                    height: 300,
-                    objectFit: 'cover',
-                    objectPosition: 'center top',
-                  }}
-                />
-                <div style={{ padding: '22px 0', borderBottom: '1px solid var(--divider)' }}>
-                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 400, color: 'var(--charcoal)', marginBottom: 4 }}>{c.name}</p>
-                  <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--olive)', fontFamily: "'Jost', sans-serif", fontWeight: 500, marginBottom: 8 }}>{c.role}</p>
-                  <p style={{ fontSize: 12, color: 'var(--stone)', fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>{c.note}</p>
+        {/* ══════════════════════════════════
+            CLERGY
+        ══════════════════════════════════ */}
+        <section style={{ padding: '110px 60px', background: 'var(--cream)' }}>
+          <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+            <div className="reveal" style={{ marginBottom: 60 }}>
+              <SectionLabel text="Our Leadership" />
+              <h2 style={sectionTitle}>
+                Meet the <em style={{ fontStyle: 'italic', color: 'var(--olive)' }}>Clergy</em>
+              </h2>
+              <GoldRule />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 32 }}>
+              {CLERGY.map((c, i) => (
+                <div key={i} className="reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+                  <PlaceholderImg src={c.src} height={300} label={c.name} />
+                  <div style={{ padding: '22px 0', borderBottom: '1px solid var(--divider)' }}>
+                    <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 400, color: 'var(--charcoal)', marginBottom: 4 }}>{c.name}</p>
+                    <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--olive)', fontFamily: "'Jost', sans-serif", fontWeight: 500, marginBottom: 8 }}>{c.role}</p>
+                    <p style={{ fontSize: 12, color: 'var(--stone)', fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>{c.note}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* ══════════════════════════════════
-        SECTION 4: BRIEF HISTORY
+          BRIEF HISTORY
       ══════════════════════════════════ */}
-      <section style={{
-        padding: '110px 60px',
-        background: 'var(--olive-deep)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        {/* Subtle dot-grid texture overlay — purely decorative */}
-        <div style={{
-          position: 'absolute', inset: 0, opacity: 0.04,
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(250,248,242,0.5) 39px, rgba(250,248,242,0.5) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(250,248,242,0.5) 39px, rgba(250,248,242,0.5) 40px)',
-        }} />
-
+      <section style={{ padding: '110px 60px', background: 'var(--olive-deep)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, opacity: 0.04, backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(250,248,242,0.5) 39px, rgba(250,248,242,0.5) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(250,248,242,0.5) 39px, rgba(250,248,242,0.5) 40px)' }} />
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
-
-          {/* Left column — slides in from the left on scroll */}
           <div className="reveal-left">
             <SectionLabel text="Our Story" light />
             <h2 style={{ ...sectionTitle, color: 'var(--cream)', fontSize: 'clamp(38px, 5vw, 60px)' }}>
               A Brief <em style={{ fontStyle: 'italic' }}>History</em>
             </h2>
             <GoldRule light />
-            {/* Three history paragraphs — colour is cream at 60% opacity for hierarchy */}
             <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, lineHeight: 1.9, color: 'rgba(250,248,242,0.6)', marginBottom: 18 }}>
-              All Saints Cathedral was founded in 1847 by a small congregation seeking a spiritual home in a rapidly growing city. The original stone chapel, built by Irish stonemasons, stood as a beacon of community for early settlers.
+              All Saints began in 2005 with Catholic students at Moi University Annex campus gathering for Sunday worship in a humble mushroom farm building. Under the late Bishop Cornelius Korir, Fr. David Kibet was assigned as the first chaplain, laying the foundation of what would become a thriving community.
             </p>
             <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, lineHeight: 1.9, color: 'rgba(250,248,242,0.6)', marginBottom: 18 }}>
-              Through fires, wars, and renewal, the Cathedral has been rebuilt and expanded three times — each era leaving its mark in the Gothic arches, Victorian stained glass, and the modern nave added in 1972.
+              In 2017, the Jenga Kanisa Initiative was born — a bold vision to build a permanent home. A 2.5-acre parcel of land was secured, and through two remarkable online Harambees, the community raised Ksh 37.5 million, clearing a Ksh 28 million bank loan in just 1 year and 8 months.
             </p>
             <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, lineHeight: 1.9, color: 'rgba(250,248,242,0.6)' }}>
-              Today, All Saints serves over 2,000 families and stands as one of the oldest continuously active cathedrals in the region.
+              On 18th June 2023, Bishop Dominic Kimengich declared All Saints a full Parish, with Fr. Michael Mutai appointed as founding Parish Priest — a culmination of eighteen years of faith, sacrifice, and community.
             </p>
           </div>
-
-          {/* Right column — slides in from the right on scroll */}
           <div className="reveal-right">
-            <PlaceholderImg height={440} label="Cathedral Exterior c. 1920" style={{ border: '1px solid rgba(168,137,58,0.3)' }} />
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════
-          SECTION 5: TIMELINE
-          A vertical centred track with
-          alternating left/right milestone cards.
-          Even-indexed items sit on the left,
-          odd-indexed on the right — like a
-          zigzag stitch down the page.
-      ══════════════════════════════════ */}
-      <section style={{ padding: '110px 60px', background: 'var(--cream)' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-
-          {/* Section heading */}
-          <div className="reveal" style={{ textAlign: 'center', marginBottom: 70 }}>
-            <SectionLabel text="Milestones" />
-            <h2 style={sectionTitle}>
-              Our <em style={{ fontStyle: 'italic', color: 'var(--olive)' }}>Timeline</em>
-            </h2>
-            <GoldRule centered />
-          </div>
-
-          {/* Timeline track wrapper — positioned so cards can anchor to the centre line */}
-          <div style={{ position: 'relative' }}>
-            {/* Vertical centre line — the "thread" all milestone dots hang on */}
-            <div style={{
-              position: 'absolute', left: '50%', top: 0, bottom: 0,
-              width: 1, background: 'var(--divider)',
-              transform: 'translateX(-50%)',
-            }} />
-
-            {/* Render each milestone as an alternating card */}
-            {TIMELINE.map((ev, i) => (
-              <TimelineItem key={i} {...ev} index={i} />
-            ))}
+            <PlaceholderImg height={440} label="Parish Ground-Breaking, Palm Sunday 2022" style={{ border: '1px solid rgba(168,137,58,0.3)' }} />
           </div>
         </div>
       </section>
@@ -421,59 +249,23 @@ export default function Home() {
   );
 }
 
-/* ─────────────────────────────────────────────────────────
-   SUB-COMPONENT: TimelineItem
-   Renders one milestone card, positioned left or right
-   of the centre line based on its index (even = left).
-   Each card has a coloured dot that sits on the centre line.
-───────────────────────────────────────────────────────── */
-function TimelineItem({ year, title, desc, index }) {
-  const isLeft = index % 2 === 0; // true → card on left side
-
+function MassCard({ day, name, time, note }) {
   return (
     <div
-      className="reveal"
-      style={{
-        display: 'flex',
-        alignItems: 'flex-start',
-        // Push the card to the correct half by adjusting padding
-        justifyContent: isLeft ? 'flex-end' : 'flex-start',
-        paddingRight: isLeft ? 'calc(50% + 36px)' : 0,
-        paddingLeft:  isLeft ? 0 : 'calc(50% + 36px)',
-        marginBottom: 48,
-        position: 'relative',
-      }}
+      style={{ background: 'var(--cream)', border: '1px solid var(--divider)', padding: '36px 28px', position: 'relative', overflow: 'hidden', transition: 'transform 0.3s', cursor: 'default' }}
+      onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.querySelector('.card-bar').style.transform = 'scaleX(1)'; }}
+      onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.querySelector('.card-bar').style.transform = 'scaleX(0)'; }}
     >
-      {/* Dot on the centre line — gold for "Today", olive for past events */}
-      <div style={{
-        position: 'absolute', left: '50%', top: 10,
-        transform: 'translateX(-50%)',
-        width: 12, height: 12, borderRadius: '50%',
-        background: index === 5 ? 'var(--gold)' : 'var(--olive)',
-        border: '3px solid var(--cream)',
-        zIndex: 1,
-        boxShadow: '0 0 0 1px var(--olive)',
-      }} />
-
-      {/* Card body */}
-      <div style={{ background: 'var(--warm)', border: '1px solid var(--divider)', padding: '22px 24px', maxWidth: 300 }}>
-        {/* Year in large serif — acts as a visual anchor */}
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 400, color: 'var(--olive)', lineHeight: 1 }}>{year}</p>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, fontWeight: 400, color: 'var(--charcoal)', margin: '6px 0 8px' }}>{title}</p>
-        <p style={{ fontSize: 13, color: 'var(--stone)', fontFamily: "'Jost', sans-serif", fontWeight: 300, lineHeight: 1.8 }}>{desc}</p>
-      </div>
+      <div className="card-bar" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'var(--olive)', transform: 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.35s ease' }} />
+      <p style={{ fontSize: 9, letterSpacing: 4, textTransform: 'uppercase', color: 'var(--gold)', fontFamily: "'Jost', sans-serif", fontWeight: 500, marginBottom: 10 }}>{day}</p>
+      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 400, color: 'var(--charcoal)', marginBottom: 6 }}>{name}</p>
+      <p style={{ fontSize: 14, color: 'var(--olive)', fontFamily: "'Jost', sans-serif", fontWeight: 400, letterSpacing: 1 }}>{time}</p>
+      <div style={{ width: 30, height: 1, background: 'var(--divider)', margin: '16px 0' }} />
+      <p style={{ fontSize: 12, color: 'var(--stone)', fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>{note}</p>
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────────────────
-   SHARED STYLE OBJECTS
-   Defined once at the bottom so they can be reused across
-   multiple JSX elements without repeating inline styles.
-   Think of these like named presets on a mixing board.
-───────────────────────────────────────────────────────── */
-
-// Section title — large, light-weight Cormorant serif
 const sectionTitle = {
   fontFamily: "'Cormorant Garamond', serif",
   fontWeight: 300,
@@ -482,7 +274,6 @@ const sectionTitle = {
   fontSize: 'clamp(38px, 5vw, 60px)',
 };
 
-// Filled olive button — used for the primary CTA
 const btnPrimary = {
   padding: '14px 40px',
   background: 'var(--olive)',
@@ -497,8 +288,6 @@ const btnPrimary = {
   transition: 'all 0.3s',
 };
 
-// Outlined ghost button — used for secondary CTA
-// Borders/text are cream-toned so they show on the dark hero photo
 const btnGhost = {
   padding: '14px 40px',
   background: 'transparent',
