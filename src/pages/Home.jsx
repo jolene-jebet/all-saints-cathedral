@@ -23,11 +23,12 @@ function useReveal() {
 
 const MASSES = [
   { day: 'Sunday',    name: 'First Mass',   time: '8:00 AM' },
-  { day: 'Sunday',    name: 'Second Mass',  time: '10:30 AM'  },
-  { day: 'Sunday',    name: 'Evening Mass',    time: '6:00 PM'},
-  { day: 'Wednesday', name: 'Midweek Mass',      time: '12:15 PM'},
-  { day: 'Friday',    name: 'Confession',        time: '5:00 PM'},
-  { day: 'Daily',     name: 'Morning Prayer',    time: '7:30 AM',},
+  { day: 'Sunday',    name: 'Second Mass',  time: '10:00 AM' },
+  { day: 'Tuesday',   name: 'Weekday Mass', time: '6:45 AM' },
+  { day: 'Wednesday', name: 'Weekday Mass', time: '6:45 AM' },
+  { day: 'Thursday',  name: 'Evening Mass', time: '5:00 PM' },
+  { day: 'Friday',    name: 'Weekday Mass', time: '6:45 AM' },
+  { day: 'Saturday',  name: 'Confession',   time: '9:00 AM' },
 ];
 
 const CLERGY = [
@@ -64,7 +65,7 @@ export default function Home() {
             object-fit: cover ensures it crops gracefully at any screen size
             (like setting a photo as a desktop wallpaper — it always fills). */}
         <img
-          src="/images/exterior_painted.png"
+          src="./images/exterior_painted.png"
           alt="All Saints Parish exterior"
           style={{
             position: 'absolute',

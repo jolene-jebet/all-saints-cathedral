@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
 // Layout
 import Navbar from './components/layout/Navbar';
@@ -14,7 +14,7 @@ import './styles/globals.css';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       {/* Navbar is always visible — lives outside <Routes> */}
       <Navbar />
 
@@ -34,6 +34,6 @@ export default function App() {
 
       {/* Footer is always visible — lives outside <Routes> */}
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
