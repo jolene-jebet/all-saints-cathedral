@@ -3,6 +3,7 @@ import SectionLabel from '../components/ui/SectionLabel';
 import GoldRule from '../components/ui/GoldRule';
 import PlaceholderImg from '../components/ui/PlaceholderImg';
 
+
 function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
@@ -108,9 +109,9 @@ export default function About() {
           </div>
 
           <div className="reveal-right">
-            <PlaceholderImg height={420} label="All Saints Catholic Church, Annex" />
+          <PlaceholderImg src="./images/arial-church.png" height={420} label="All Saints Catholic Church, Annex" zoom={2.5}/>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, marginTop: 2 }}>
-              {['2005 Founded', '4 Stations', '2023 Parish', '1 Family'].map((s, i) => (
+              {['2005 Founded', '3 Stations', '2023 Parish', '1 Family'].map((s, i) => (
                 <div key={i} style={{ background: 'var(--olive-pale)', padding: '20px', textAlign: 'center' }}>
                   <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 400, color: 'var(--olive)' }}>{s.split(' ')[0]}</p>
                   <p style={{ fontSize: 10, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--stone)', fontFamily: "'Jost',sans-serif", fontWeight: 400 }}>{s.split(' ').slice(1).join(' ')}</p>
@@ -145,7 +146,7 @@ export default function About() {
             </p>
           </div>
           <div className="reveal-right">
-            <PlaceholderImg height={440} label="Parish Ground-Breaking, Palm Sunday 2022" style={{ border: '1px solid rgba(168,137,58,0.3)' }} />
+          <PlaceholderImg src="./images/ground-breaking.jpg" height={420} label="ground breaking 2022" zoom={2.5}/>
           </div>
         </div>
       </section>
@@ -263,13 +264,13 @@ export default function About() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
-            <div style={{ gridColumn: '1/3' }} className="reveal"><PlaceholderImg height={340} label="The Parish Grounds" /></div>
-            <div style={{ gridColumn: '3/4' }} className="reveal"><PlaceholderImg height={340} label="Sunday Mass" /></div>
-            <div className="reveal"><PlaceholderImg height={240} label="CSA Fellowship" /></div>
-            <div className="reveal"><PlaceholderImg height={240} label="Ground-Breaking 2022" /></div>
-            <div className="reveal"><PlaceholderImg height={240} label="Parish Inauguration 2023" /></div>
-            <div style={{ gridColumn: '1/2' }} className="reveal"><PlaceholderImg height={280} label="Community Harambee" /></div>
-            <div style={{ gridColumn: '2/4' }} className="reveal"><PlaceholderImg height={280} label="Fr. Mutai's Reception, July 2023" /></div>
+            <div style={{ gridColumn: '1/3' }} className="reveal"><PlaceholderImg src="./images/beautiful-exterior.jpg" height={340} label="The Parish Grounds" /></div>
+            <div style={{ gridColumn: '3/4' }} className="reveal"><PlaceholderImg src="./images/construction.jpg" height={340} label="Sunday Mass" /></div>
+            <div className="reveal"><PlaceholderImg src="./images/committee-building.jpg" height={240} label="CSA Fellowship" /></div>
+            <div className="reveal"><PlaceholderImg src="./images/bishop-building-school.jpg" height={240} label="Ground-Breaking 2022" /></div>
+            <div className="reveal"><PlaceholderImg src="./images/choir-singing.png" height={240} label="Parish Inauguration 2023" /></div>
+            <div style={{ gridColumn: '1/2' }} className="reveal"><PlaceholderImg src="./images/fr-mrtirop.png" height={280} label="Community Harambee" /></div>
+            <div style={{ gridColumn: '2/4' }} className="reveal"><PlaceholderImg src="./images/people_interior.png" height={280} label="Fr. Mutai's Reception, July 2023" /></div>
           </div>
         </div>
       </section>

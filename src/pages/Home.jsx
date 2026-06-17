@@ -32,7 +32,7 @@ const MASSES = [
 ];
 
 const CLERGY = [
-  { name: 'Fr. Michael Mutai',    role: 'Founding Parish Priest',  note: 'Appointed June 2023', src: '/images/clergy/fr_mutai.jpg' },
+  { name: 'Fr. Michael Mutai',    role: 'Founding Parish Priest',  note: 'Appointed June 2023', src: './images/fr_michael.jpg' },
   { name: 'Fr. Timothy Kiplagat', role: 'Cathedral Administrator', note: 'Served since 2011',   src: '/images/clergy/fr_timothy.jpg' },
   { name: 'Fr. David Kibet',      role: 'Former Chaplain',         note: 'Served 2005 – 2018',  src: '/images/clergy/fr_david.jpg' },
   { name: 'Fr. Charles Kirui',    role: 'Former Chaplain',         note: 'Served 2009 – 2011',  src: '/images/clergy/fr_kirui.jpg' },
@@ -241,7 +241,7 @@ export default function Home() {
             </p>
           </div>
           <div className="reveal-right">
-            <PlaceholderImg height={440} label="Parish Ground-Breaking, Palm Sunday 2022" style={{ border: '1px solid rgba(168,137,58,0.3)' }} />
+            <PlaceholderImg src='./images/bishop-building-school.jpg' height={440} label="Parish Ground-Breaking, Palm Sunday 2022" style={{ border: '1px solid rgba(168,137,58,0.3)' }} />
           </div>
         </div>
       </section>
