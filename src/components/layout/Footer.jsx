@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { FaFacebookF, FaYoutube, FaInstagram } from 'react-icons/fa';
 
 const FOOTER_NAV = [
   { label: 'Home',        path: '/' },
@@ -14,6 +15,12 @@ const SERVICES = [
   'Sunday 10:30 AM',
   'Wednesday 12:15 PM',
   'Confession Fri 5 PM',
+];
+
+const SOCIALS = [
+  { label: 'Facebook',  href: '#', Icon: FaFacebookF },
+  { label: 'YouTube',   href: '#', Icon: FaYoutube },
+  { label: 'Instagram', href: '#', Icon: FaInstagram },
 ];
 
 const CONTACT = [
@@ -48,7 +55,7 @@ export default function Footer() {
               fontWeight: 400,
               marginBottom: 12,
             }}>
-              All Saints Cathedral
+              All Saints Parish Annex
             </div>
             <p style={{
               fontFamily: "'Jost', sans-serif",
@@ -59,21 +66,32 @@ export default function Footer() {
               maxWidth: 280,
               marginBottom: 24,
             }}>
-              A place of worship, community, and grace since 1847.
-              All are welcome.
+              A place of worship, community, and grace — serving Annex,
+              Eldoret since 2005. All are welcome.
             </p>
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              {['✦ Facebook', '✦ YouTube', '✦ Instagram'].map(s => (
-                <span key={s} style={{
-                  fontSize: 10,
-                  letterSpacing: 2,
-                  textTransform: 'uppercase',
-                  color: 'var(--gold-light)',
-                  cursor: 'pointer',
-                  fontFamily: "'Jost', sans-serif",
-                }}>
-                  {s}
-                </span>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              {SOCIALS.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  style={{
+                    width: 34,
+                    height: 34,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid rgba(201,168,76,0.3)',
+                    color: 'var(--gold-light)',
+                    transition: 'background 0.2s, color 0.2s',
+                  }}
+                  onMouseOver={e => { e.currentTarget.style.background = 'var(--gold-light)'; e.currentTarget.style.color = 'var(--charcoal)'; }}
+                  onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--gold-light)'; }}
+                >
+                  <Icon size={14} />
+                </a>
               ))}
             </div>
           </div>
