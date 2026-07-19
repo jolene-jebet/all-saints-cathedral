@@ -23,11 +23,17 @@ const SOCIALS = [
   { label: 'Instagram', href: '#', Icon: FaInstagram },
 ];
 
-const CONTACT = [
+const CHURCH_CONTACT = [
   '1 Cathedral Close',
   'City Centre, EC1A',
   'office@allsaintscathedral.org',
   '+1 (555) 012-3456',
+];
+
+const SCHOOL_CONTACT = [
+  'School Address — TBD',
+  'School Email — TBD',
+  'School Phone — TBD',
 ];
 
 export default function Footer() {
@@ -42,8 +48,8 @@ export default function Footer() {
         {/* ── Top Grid ── */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr 1fr 1fr',
-          gap: 60,
+          gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
+          gap: 40,
           marginBottom: 60,
         }}>
 
@@ -131,9 +137,23 @@ export default function Footer() {
             ))}
           </FooterCol>
 
-          {/* Contact column */}
-          <FooterCol title="Contact">
-            {CONTACT.map(c => (
+          {/* Church contact column */}
+          <FooterCol title="Church Contact">
+            {CHURCH_CONTACT.map(c => (
+              <li key={c} style={{
+                fontSize: 13,
+                color: 'rgba(250,248,242,0.5)',
+                fontFamily: "'Jost', sans-serif",
+                fontWeight: 300,
+              }}>
+                {c}
+              </li>
+            ))}
+          </FooterCol>
+
+          {/* School contact column */}
+          <FooterCol title="School Contact">
+            {SCHOOL_CONTACT.map(c => (
               <li key={c} style={{
                 fontSize: 13,
                 color: 'rgba(250,248,242,0.5)',
@@ -162,7 +182,7 @@ export default function Footer() {
             color: 'rgba(250,248,242,0.3)',
             fontFamily: "'Jost', sans-serif",
           }}>
-            © {new Date().getFullYear()} All Saints Cathedral. All rights reserved.
+            © {new Date().getFullYear()} All Saints Parish Annex. All rights reserved.
           </span>
           <span style={{
             fontSize: 11,
