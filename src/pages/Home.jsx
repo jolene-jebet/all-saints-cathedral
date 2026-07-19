@@ -33,9 +33,9 @@ const MASSES = [
 
 const CLERGY = [
   { name: 'Fr. Michael Mutai',    role: 'Founding Parish Priest',  note: 'Appointed June 2023', src: './images/fr_michael.jpg' },
-  { name: 'Fr. Timothy Kiplagat', role: 'Cathedral Administrator', note: 'Served since 2011',   src: '/images/clergy/fr_timothy.jpg' },
-  { name: 'Fr. David Kibet',      role: 'Former Chaplain',         note: 'Served 2005 – 2018',  src: '/images/clergy/fr_david.jpg' },
-  { name: 'Fr. Charles Kirui',    role: 'Former Chaplain',         note: 'Served 2009 – 2011',  src: '/images/clergy/fr_kirui.jpg' },
+  { name: 'Fr. Timothy Kiplagat', role: 'Cathedral Administrator', note: 'Served since 2011' },
+  { name: 'Fr. David Kibet',      role: 'Former Chaplain',         note: 'Served 2005 – 2018' },
+  { name: 'Fr. Charles Kirui',    role: 'Former Chaplain',         note: 'Served 2009 – 2011' },
 ];
 
 export default function Home() {
