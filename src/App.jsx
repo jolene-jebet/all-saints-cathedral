@@ -7,7 +7,8 @@ import Footer from './components/layout/Footer';
 // Pages
 import Home from './pages/Home';
 import About from './pages/About';
-// import { Ministries, News, Donation, School } from './pages/Placeholders';
+import School from './pages/School';
+// import { Ministries, News, Donation } from './pages/Placeholders';
 
 // Global styles (CSS variables, fonts, animations)
 import './styles/globals.css';
@@ -23,10 +24,10 @@ export default function App() {
         <Routes>
           <Route path="/"            element={<Home />} />
           <Route path="/about"       element={<About />} />
+          <Route path="/school"      element={<School />} />
           {/* <Route path="/ministries"  element={<Ministries />} />
           <Route path="/news"        element={<News />} />
-          <Route path="/donation"    element={<Donation />} />
-          <Route path="/school"      element={<School />} /> */}
+          <Route path="/donation"    element={<Donation />} /> */}
           {/* Catch-all: redirect unknown URLs back to Home */}
           <Route path="*"            element={<Home />} />
         </Routes>
