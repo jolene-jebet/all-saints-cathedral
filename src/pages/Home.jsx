@@ -60,10 +60,7 @@ export default function Home() {
         overflow: 'hidden',
       }}>
 
-        {/* ── Hero background image ──
-            A full-cover parish photo sits behind all content.
-            object-fit: cover ensures it crops gracefully at any screen size
-            (like setting a photo as a desktop wallpaper — it always fills). */}
+        {/* ── Hero background image ──*/}
         <img
           src="./images/exterior_painted.png"
           alt="All Saints Parish exterior"
@@ -119,11 +116,12 @@ export default function Home() {
               Our Story
             </button>
             <button
+              onClick={() => document.getElementById('mass-schedule')?.scrollIntoView({ behavior: 'smooth' })}
               style={btnGhost}
               onMouseOver={e => { e.currentTarget.style.borderColor = 'var(--gold)'; e.currentTarget.style.color = 'var(--gold)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
               onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(250,248,242,0.4)'; e.currentTarget.style.color = 'var(--cream)'; e.currentTarget.style.transform = 'translateY(0)'; }}
             >
-              Plan Your Visit
+              Mass Schedule
             </button>
           </div>
         </div>
@@ -137,7 +135,7 @@ export default function Home() {
       {/* ══════════════════════════════════
       MASS SCHEDULE
       ══════════════════════════════════ */}
-      <section style={{ padding: '110px 60px', background: 'var(--warm)', borderTop: '1px solid var(--divider)' }}>
+      <section id="mass-schedule" style={{ padding: '110px 60px', background: 'var(--warm)', borderTop: '1px solid var(--divider)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: 60 }}>
             <SectionLabel text="Gather With Us" />
